@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ee0964108504ef0a497e846046748a3, type: 3}
-  m_Name: Quest
+  m_Name: Quest 2
   m_EditorClassIdentifier: 
   _requiredItems:
   - {fileID: 11400000, guid: bd615a00ee2837a468100ed43448481e, type: 2}
-  - {fileID: 11400000, guid: a5a65544311d4304ea61a04b1ad7d0db, type: 2}

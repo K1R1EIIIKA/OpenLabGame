@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94b05caf1b6a430dbddce765f41fc111, type: 3}
-  m_Name: Emotion 1
+  m_Name: Emotion 2
   m_EditorClassIdentifier: 
   Emotion: 3
   Sprite: {fileID: 21300000, guid: 100f4bd56e1a30c42b14236ea14abb95, type: 3}

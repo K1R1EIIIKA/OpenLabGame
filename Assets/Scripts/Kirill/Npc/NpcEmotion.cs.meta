@@ -1,3 +1,13 @@
 fileFormatVersion: 2
 guid: bffada908a124b4f9c006fa706287f3b
-timeCreated: 1718122116
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _emotionCloud: {instanceID: 0}
+  - _emotionImage: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
