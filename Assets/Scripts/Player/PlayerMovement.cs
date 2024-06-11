@@ -63,12 +63,12 @@ public class PlayerMovement : MonoBehaviour
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
         _input = _input.normalized;
 
-        //transform.Translate(_input * (_speed * Time.deltaTime));// *** translate лучше использовать для телепортации а не для движения
+        //transform.Translate(_input * (_speed * Time.deltaTime));// *** translate пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         
         _rb.velocity = new Vector2(_input.x * _speed, _rb.velocity.y);
 
 
-        _isMoving = _input.x != 0 ? true : false;
+        _isMoving = _input.x != 0;
 
         if (_isMoving)
         {
