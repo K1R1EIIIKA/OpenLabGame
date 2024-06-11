@@ -42,11 +42,11 @@ public class PlayerMovement : MonoBehaviour
 
         transform.Translate(_input * (_speed * Time.deltaTime));
 
-        _isMoving = _input.x != 0 ? true : false;
+        _isMoving = _input.x != 0;
 
         if (_isMoving)
         {
-            _spriteRenderer.flipX = _input.x > 0 ? false : true;
+            _spriteRenderer.flipX = _input.x < 0;
         }
     }
 
