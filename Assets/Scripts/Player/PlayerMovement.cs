@@ -11,8 +11,13 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 _input;
     private bool _isMoving;
-    private bool _isGrounded;
+    [SerializeField] private bool _isGrounded;
     private bool _isFacingRight = true;
+
+    [SerializeField] private bool jumpControl;
+    [SerializeField] private float jumpTime = 0f;
+    [SerializeField] private float jumpControlTime = 3f;
+
 
     private CameraFollowObject cameraFollowObjectScript;
     [SerializeField] private GameObject cameraFollowGameObject;
@@ -46,24 +51,42 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
-        {
-            Jump();
-        }
+        Jump();
     }
 
     private void Jump()
     {
-        _rb.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
-        _isGrounded = false;
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (_isGrounded)
+            {
+                jumpControl = true;
+            }
+        }
+        else
+        {
+            jumpControl = false;
+        }
+
+        if( jumpControl )
+        {
+            if((jumpTime += Time.deltaTime) < jumpControlTime)
+            {
+                _rb.AddForce(Vector2.up * _jumpForce * jumpTime * 10, ForceMode2D.Impulse);
+            }
+        }
+        else
+        {
+            jumpTime = 0;
+        }
+
+        
     }
 
     private void Move()
     {
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
         _input = _input.normalized;
-
-        //transform.Translate(_input * (_speed * Time.deltaTime));// *** translate ����� ������������ ��� ������������ � �� ��� ��������
         
         _rb.velocity = new Vector2(_input.x * _speed, _rb.velocity.y);
 
@@ -109,6 +132,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
             _isGrounded = true;
+    }
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+            _isGrounded = false;
     }
 
     public bool GetIsFacingDirection()
