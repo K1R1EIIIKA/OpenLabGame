@@ -72,15 +72,20 @@ public class PlayerMovement : MonoBehaviour
         {
             if((jumpTime += Time.deltaTime) < jumpControlTime)
             {
-                _rb.AddForce(Vector2.up * _jumpForce * jumpTime * 10, ForceMode2D.Impulse);
+                
+            }
+            else
+            {
+                jumpTime = jumpControlTime;  
             }
         }
-        else
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            jumpTime = 0;
+            _rb.AddForce(Vector2.up * _jumpForce * jumpTime * 10, ForceMode2D.Impulse);
+            jumpTime = 0f;
         }
 
-        
+
     }
 
     private void Move()
