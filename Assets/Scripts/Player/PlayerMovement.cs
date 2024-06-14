@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Animator animator;
 
     private Vector2 _input;
     private bool _isMoving;
@@ -18,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpTime = 0f;
     [SerializeField] private float jumpControlTime = 3f;
 
+    [SerializeField] private float verticalErrorRate;
+    [SerializeField] private Sprite moveUp;
+    [SerializeField] private Sprite moveDown;
 
     private CameraFollowObject cameraFollowObjectScript;
     [SerializeField] private GameObject cameraFollowGameObject;
@@ -95,7 +99,27 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isMoving)
         {
+            animator.SetBool("IsMove", true);
             TurnCheck();
+        }
+        else
+        {
+            animator.SetBool("IsMove", false);
+        }
+
+        if(_rb.velocity.y > verticalErrorRate)
+        {
+            animator.enabled = false;
+            _spriteRenderer.sprite = moveUp;
+        }
+        else if(_rb.velocity.y <- verticalErrorRate)
+        {
+            animator.enabled = false;
+            _spriteRenderer.sprite = moveDown;
+        }
+        else
+        {
+            animator.enabled = true;
         }
     }
 
