@@ -37,12 +37,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
 
-        if(_rb.velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+        if (_rb.velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
         {
             CameraManager.instance.LerpYDamping(true);
         }
 
-        if(_rb.velocity.y >=0 && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+        if (_rb.velocity.y >= 0 && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
         {
             CameraManager.instance.LerpedFromPlayerFalling = false;
             CameraManager.instance.LerpYDamping(false);
@@ -68,21 +68,16 @@ public class PlayerMovement : MonoBehaviour
             jumpControl = false;
         }
 
-        if( jumpControl )
+        if (jumpControl)
         {
-            if((jumpTime += Time.deltaTime) < jumpControlTime)
+            if ((jumpTime += Time.deltaTime) < jumpControlTime)
             {
-                
-            }
-            else
-            {
-                jumpTime = jumpControlTime;  
+                _rb.AddForce(Vector2.up * _jumpForce * jumpTime * 10, ForceMode2D.Impulse);
             }
         }
-        if (Input.GetKeyUp(KeyCode.Space))
+        else
         {
-            _rb.AddForce(Vector2.up * _jumpForce * jumpTime * 10, ForceMode2D.Impulse);
-            jumpTime = 0f;
+            jumpTime = 0;
         }
 
 
@@ -92,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
         _input = _input.normalized;
-        
+
         _rb.velocity = new Vector2(_input.x * _speed, _rb.velocity.y);
 
 
@@ -106,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void TurnCheck()
     {
-        if(_input.x > 0 && !_isFacingRight)
+        if (_input.x > 0 && !_isFacingRight)
         {
             Turn();
         }
@@ -117,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Turn()
     {
-        if(_isFacingRight)
+        if (_isFacingRight)
         {
             Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
