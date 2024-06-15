@@ -12,6 +12,7 @@ public class CollectableThing : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             InventoryScript.Collect(index);
+            Destroy(gameObject);
         }
             
     }
