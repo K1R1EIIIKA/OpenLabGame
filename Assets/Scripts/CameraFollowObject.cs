@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollowObject : MonoBehaviour
@@ -14,9 +13,8 @@ public class CameraFollowObject : MonoBehaviour
 
     private Coroutine _turnCoroutine;
 
-    [SerializeField] private float coolDownCameraRotation = 4f;
-    private float timeLast;
-
+    [SerializeField] private float _cooldownRotation = 4f;
+    private float _lastRotation;
 
     private bool _isFacingRight;
 
@@ -32,13 +30,18 @@ public class CameraFollowObject : MonoBehaviour
 
     public void CallTurn()
     {
-        _turnCoroutine = StartCoroutine(FlipYLerp());
-    }
-    private IEnumerator FlipYLerp()
-    {        
-        if(Time.time - timeLast < coolDownCameraRotation)
+        if (_turnCoroutine == null)
         {
-            timeLast = Time.time;
+            _turnCoroutine = StartCoroutine(FlipYLerp());
+        }
+    }
+
+    private IEnumerator FlipYLerp()
+    {
+        if (Time.time - _lastRotation >= _cooldownRotation)
+        {
+            _lastRotation = Time.time;
+
             float startRotation = transform.localEulerAngles.y;
             float endRotationAmount = DeterminendRotation();
             float yRotation = 0f;
@@ -47,34 +50,19 @@ public class CameraFollowObject : MonoBehaviour
             while (elapseTime < _flipRotationTime)
             {
                 elapseTime += Time.deltaTime;
-
                 yRotation = Mathf.Lerp(startRotation, endRotationAmount, (elapseTime / _flipRotationTime));
                 transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
-
                 yield return null;
             }
         }
-        else
-        {
-            yield return null;
-        }
-        
+        _turnCoroutine = null;
     }
-
-
 
     private float DeterminendRotation()
     {
         _isFacingRight = !_isFacingRight;
-        
-        if (_isFacingRight )
-        {
-            return 180f;
-        }
-        else
-        {
-            return 0f;
-        }
-    }
 
+        return _isFacingRight ? 180f : 0f;
+    }
 }
+
