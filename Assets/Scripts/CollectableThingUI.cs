@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CollectableThingUI : MonoBehaviour
 {
     public int isHave = 0;
+    public int cost = 1;
     [SerializeField] private TextMeshProUGUI countThing;
     [SerializeField] private Color notHaveColor;
     [SerializeField] private Color haveColor;
@@ -18,7 +19,7 @@ public class CollectableThingUI : MonoBehaviour
     }
     public void Collect()
     {
-        if (isHave == 0)
+        if (isHave <= 0)
         {
             gameObject.GetComponent<Image>().color = notHaveColor;
         }

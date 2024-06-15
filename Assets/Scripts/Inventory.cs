@@ -10,4 +10,9 @@ public class Inventory : MonoBehaviour
     {
         collectableThings[index].GetComponent<CollectableThingUI>().isHave +=1;
     }
-}
+
+    public GameObject[] GetArray()
+    {
+        return collectableThings;
+    }
+ }
