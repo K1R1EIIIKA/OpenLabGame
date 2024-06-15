@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -9,34 +9,53 @@ namespace Kirill.Npc
     public class NpcEmotion : MonoBehaviour
     {
         [SerializeField] private GameObject _hintCanvas;
-        [SerializeField] private GameObject _emotionCloud;
-        [SerializeField] private SpriteRenderer _emotionImage;
-        [SerializeField] private List<EmotionSO> _emotions;
+        [SerializeField] private List<GameObject> _emotionClouds;
+        [SerializeField] private Vector2 _cloudOffset = new(0.31f, 0.57f);
         [SerializeField] private float _lifeTime = 3f;
+        [SerializeField] private float _fadeTime = 0.75f;
 
         private bool _isTriggered;
         private bool _isCooldown;
-        private List<SpriteRenderer> _cloudRenderers;
+        
+        [SerializeField] private bool _isQuest;
+        [SerializeField] private GameObject _questCanvas;
 
         private void Awake()
         {
-            _cloudRenderers = new List<SpriteRenderer>(_emotionCloud.GetComponentsInChildren<SpriteRenderer>());
-
-            foreach (var renderer in _cloudRenderers)
+            foreach (var cloud in _emotionClouds)
             {
-                var color = renderer.color;
-                color.a = 0;
-                renderer.color = color;
+                foreach (var renderer in cloud.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    renderer.DOFade(0, 0);
+                }
+                cloud.gameObject.SetActive(false);
             }
+        }
 
-            _emotionCloud.SetActive(false);
+        private void Start()
+        {
+            SetActiveQuestCanvas(_isQuest);
+        }
+        
+        private void SetActiveQuestCanvas(bool isActive)
+        {
+            _questCanvas.SetActive(isActive);
+        }
+
+        public static void UpdateQuestCanvases()
+        {
+            var npcs = FindObjectsOfType<NpcEmotion>();
+            foreach (var npc in npcs)
+            {
+                npc.SetActiveQuestCanvas(npc._isQuest);
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log(_isCooldown);
             if (other.CompareTag("Player") && !_isCooldown)
             {
+                _questCanvas.SetActive(false);
                 _hintCanvas.SetActive(true);
                 _isTriggered = true;
             }
@@ -44,9 +63,9 @@ namespace Kirill.Npc
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            Debug.Log(_isCooldown);
             if (other.CompareTag("Player") && !_isCooldown)
             {
+                _questCanvas.SetActive(false);
                 _hintCanvas.SetActive(true);
                 _isTriggered = true;
             }
@@ -56,6 +75,8 @@ namespace Kirill.Npc
         {
             if (other.CompareTag("Player"))
             {
+                if (!_isCooldown) SetActiveQuestCanvas(_isQuest);
+                
                 _hintCanvas.SetActive(false);
                 _isTriggered = false;
             }
@@ -66,38 +87,51 @@ namespace Kirill.Npc
             if (Input.GetKeyDown(KeyCode.E) && _isTriggered && !_isCooldown)
             {
                 _isCooldown = true;
-                ShowCloud();
+                StartCoroutine(ShowEmotions());
                 _hintCanvas.SetActive(false);
             }
         }
 
-        private void ShowCloud()
+        private IEnumerator ShowEmotions()
         {
-            _emotionCloud.SetActive(true);
-
-            var randomEmotion = _emotions[Random.Range(0, _emotions.Count)].Emotion;
-            SetEmotion(randomEmotion);
-            foreach (var renderer in _cloudRenderers)
+            DOVirtual.DelayedCall((_lifeTime + _fadeTime) * _emotionClouds.Count, () =>
             {
-                renderer.DOFade(1, 0.75f);
+                _isCooldown = false;
+                SetActiveQuestCanvas(_isQuest);
+            });
+            
+            foreach (var cloud in _emotionClouds)
+            {
+                var cloudObject = Instantiate(cloud, transform.position + (Vector3)_cloudOffset, Quaternion.identity);
+                ShowCloud(cloudObject);
+                yield return new WaitForSeconds(_lifeTime + _fadeTime);
+            }
+        }
+
+        private void ShowCloud(GameObject cloud)
+        {
+            if (_isQuest) _isQuest = false;
+            
+            cloud.gameObject.SetActive(true);
+            _questCanvas.SetActive(false);
+
+            foreach (var renderer in cloud.GetComponentsInChildren<SpriteRenderer>())
+            {
+                renderer.DOFade(1, _fadeTime);
             }
             
-            DOVirtual.DelayedCall(_lifeTime, () => { HideCloud(); });
+            DOVirtual.DelayedCall(_lifeTime, () => { HideCloud(cloud); });
         }
 
-        private void HideCloud()
+        private void HideCloud(GameObject cloud)
         {
-            DOVirtual.DelayedCall(0.75f, () => { _isCooldown = false; });
-            foreach (var renderer in _cloudRenderers)
+            foreach (var renderer in cloud.GetComponentsInChildren<SpriteRenderer>())
             {
-                renderer.DOFade(0, 0.75f).OnComplete(() => { _emotionCloud.SetActive(false); });
+                renderer.DOFade(0, _fadeTime).OnComplete(() =>
+                {
+                    Destroy(cloud);
+                });
             }
-        }
-
-        private void SetEmotion(Emotion emotion)
-        {
-            var emotionObject = _emotions.Find(e => e.Emotion == emotion);
-            _emotionImage.sprite = emotionObject.Sprite;
         }
     }
 }
