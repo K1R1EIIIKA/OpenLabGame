@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,9 @@ public class CameraFollowObject : MonoBehaviour
     [SerializeField] private float _flipRotationTime = 0.5f;
 
     private Coroutine _turnCoroutine;
+
+    [SerializeField] private float coolDownCameraRotation = 4f;
+    private float timeLast;
 
 
     private bool _isFacingRight;
@@ -31,22 +35,34 @@ public class CameraFollowObject : MonoBehaviour
         _turnCoroutine = StartCoroutine(FlipYLerp());
     }
     private IEnumerator FlipYLerp()
-    {
-        float startRotation = transform.localEulerAngles.y;
-        float endRotationAmount = DeterminendRotation();
-        float yRotation = 0f;
-
-        float elapseTime = 0f;
-        while(elapseTime < _flipRotationTime)
+    {        
+        if(Time.time - timeLast < coolDownCameraRotation)
         {
-            elapseTime += Time.deltaTime;
+            timeLast = Time.time;
+            float startRotation = transform.localEulerAngles.y;
+            float endRotationAmount = DeterminendRotation();
+            float yRotation = 0f;
 
-            yRotation = Mathf.Lerp(startRotation, endRotationAmount, (elapseTime / _flipRotationTime));
-            transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+            float elapseTime = 0f;
+            while (elapseTime < _flipRotationTime)
+            {
+                elapseTime += Time.deltaTime;
 
+                yRotation = Mathf.Lerp(startRotation, endRotationAmount, (elapseTime / _flipRotationTime));
+                transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+
+                yield return null;
+            }
+        }
+        else
+        {
             yield return null;
         }
+        
     }
+
+
+
     private float DeterminendRotation()
     {
         _isFacingRight = !_isFacingRight;
