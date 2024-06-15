@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Animator animator;
@@ -14,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private bool _isMoving;
     [SerializeField] private bool _isGrounded;
     private bool _isFacingRight = true;
-
 
     [SerializeField] private float verticalErrorRate;
     [SerializeField] private Sprite moveUp;
@@ -26,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private float _fallSpeedYDampingChangeThreshold;
     
     [Header("Jump")]
+    [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private float jumpTime = 0.35f;
     private float jumpTimeCounter;
     [SerializeField] private LayerMask _groundLayer;
