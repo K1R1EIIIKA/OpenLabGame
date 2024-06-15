@@ -15,9 +15,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool _isGrounded;
     private bool _isFacingRight = true;
 
-    [SerializeField] private bool jumpControl;
-    [SerializeField] private float jumpTime = 0f;
-    [SerializeField] private float jumpControlTime = 3f;
 
     [SerializeField] private float verticalErrorRate;
     [SerializeField] private Sprite moveUp;
@@ -27,6 +24,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject cameraFollowGameObject;
 
     private float _fallSpeedYDampingChangeThreshold;
+    
+    [Header("Jump")]
+    [SerializeField] private float jumpTime = 0.35f;
+    private float jumpTimeCounter;
+    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private float _groundCheckRadius = 0.2f;
+    [SerializeField] private Transform _feetPos;
+    private bool _isJumping;
 
     private void Start()
     {
@@ -60,31 +65,32 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKey(KeyCode.Space))
+        _isGrounded = Physics2D.OverlapCircle(_feetPos.position, _groundCheckRadius, _groundLayer);
+        
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            if (_isGrounded)
+            _rb.velocity = Vector2.up * _jumpForce;
+            jumpTimeCounter = jumpTime;
+            _isJumping = true;
+        }
+        
+        if (Input.GetKey(KeyCode.Space) && _isJumping)
+        {
+            if (jumpTimeCounter > 0)
             {
-                jumpControl = true;
+                _rb.velocity = Vector2.up * _jumpForce;
+                jumpTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                _isJumping = false;
             }
         }
-        else
+        
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            jumpControl = false;
+            _isJumping = false;
         }
-
-        if (jumpControl)
-        {
-            if ((jumpTime += Time.deltaTime) < jumpControlTime)
-            {
-                _rb.AddForce(Vector2.up * _jumpForce * jumpTime * 10, ForceMode2D.Impulse);
-            }
-        }
-        else
-        {
-            jumpTime = 0;
-        }
-
-
     }
 
     private void Move()
