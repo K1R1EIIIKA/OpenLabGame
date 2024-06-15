@@ -8,6 +8,6 @@ public class Inventory : MonoBehaviour
 
     public void Collect(int index)
     {
-        collectableThings[index].GetComponent<CollectableThingUI>().isHave = true;
+        collectableThings[index].GetComponent<CollectableThingUI>().isHave +=1;
     }
 }
