@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Kirill.Npc
 {
@@ -16,7 +15,7 @@ namespace Kirill.Npc
 
         private bool _isTriggered;
         private bool _isCooldown;
-        
+
         [SerializeField] private bool _isQuest;
         [SerializeField] private GameObject _questCanvas;
 
@@ -28,6 +27,7 @@ namespace Kirill.Npc
                 {
                     renderer.DOFade(0, 0);
                 }
+
                 cloud.gameObject.SetActive(false);
             }
         }
@@ -36,7 +36,7 @@ namespace Kirill.Npc
         {
             SetActiveQuestCanvas(_isQuest);
         }
-        
+
         private void SetActiveQuestCanvas(bool isActive)
         {
             _questCanvas.SetActive(isActive);
@@ -76,7 +76,7 @@ namespace Kirill.Npc
             if (other.CompareTag("Player"))
             {
                 if (!_isCooldown) SetActiveQuestCanvas(_isQuest);
-                
+
                 _hintCanvas.SetActive(false);
                 _isTriggered = false;
             }
@@ -99,7 +99,7 @@ namespace Kirill.Npc
                 _isCooldown = false;
                 SetActiveQuestCanvas(_isQuest);
             });
-            
+
             foreach (var cloud in _emotionClouds)
             {
                 var cloudObject = Instantiate(cloud, transform.position + (Vector3)_cloudOffset, Quaternion.identity);
@@ -111,7 +111,7 @@ namespace Kirill.Npc
         private void ShowCloud(GameObject cloud)
         {
             if (_isQuest) _isQuest = false;
-            
+
             cloud.gameObject.SetActive(true);
             _questCanvas.SetActive(false);
 
@@ -119,7 +119,7 @@ namespace Kirill.Npc
             {
                 renderer.DOFade(1, _fadeTime);
             }
-            
+
             DOVirtual.DelayedCall(_lifeTime, () => { HideCloud(cloud); });
         }
 
@@ -127,10 +127,7 @@ namespace Kirill.Npc
         {
             foreach (var renderer in cloud.GetComponentsInChildren<SpriteRenderer>())
             {
-                renderer.DOFade(0, _fadeTime).OnComplete(() =>
-                {
-                    Destroy(cloud);
-                });
+                renderer.DOFade(0, _fadeTime).OnComplete(() => { Destroy(cloud); });
             }
         }
     }

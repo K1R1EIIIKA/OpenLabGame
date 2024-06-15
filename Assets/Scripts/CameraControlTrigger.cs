@@ -1,7 +1,5 @@
-using Cinemachine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
 using UnityEditor;
 using UnityEngine;
 
@@ -44,7 +42,7 @@ public class CameraControlTrigger : MonoBehaviour
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class CustomInspectorObjects
 {
     public bool swapCameras = false;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -8,11 +6,11 @@ public class Inventory : MonoBehaviour
 
     public void Collect(int index)
     {
-        collectableThings[index].GetComponent<CollectableThingUI>().isHave +=1;
+        collectableThings[index].GetComponent<CollectableThingUI>().isHave += 1;
     }
 
     public GameObject[] GetArray()
     {
         return collectableThings;
     }
- }
+}

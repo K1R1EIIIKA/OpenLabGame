@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GlassManifestation : MonoBehaviour
@@ -24,14 +22,15 @@ public class GlassManifestation : MonoBehaviour
     {
         Manifestation();
     }
+
     private void Manifestation()
     {
         currentDistance = Mathf.Abs(Player.position.x - transform.position.x);
-        
-        if(currentDistance < requiredDistance)
+
+        if (currentDistance < requiredDistance)
         {
             alfa = currentDistance * speedOfManifestation;
-            sprite.color = new Color(1f,1f, 1f, 1-alfa);
+            sprite.color = new Color(1f, 1f, 1f, 1 - alfa);
         }
     }
 }

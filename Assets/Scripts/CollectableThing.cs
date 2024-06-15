@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectableThing : MonoBehaviour
@@ -14,6 +12,5 @@ public class CollectableThing : MonoBehaviour
             InventoryScript.Collect(index);
             Destroy(gameObject);
         }
-            
     }
 }

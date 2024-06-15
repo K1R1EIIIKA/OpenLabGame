@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +15,7 @@ public class CollectableThingUI : MonoBehaviour
         Collect();
         countThing.text = isHave.ToString();
     }
+
     public void Collect()
     {
         if (isHave <= 0)

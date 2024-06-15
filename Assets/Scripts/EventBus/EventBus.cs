@@ -1,42 +1,44 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventBus : MonoBehaviour
+namespace EventBus
 {
-    /* Нужно будет накинуть эту шину на пустой объект в сцене
+    public class EventBus : MonoBehaviour
+    {
+        /* Нужно будет накинуть эту шину на пустой объект в сцене
      * Я обычно использую _eventBus = FindObjectOfType<EventBus>();*/
 
-    private Dictionary<string, List<object>> _signalCallbacks = new Dictionary<string, List<object>>();
+        private Dictionary<string, List<object>> _signalCallbacks = new();
 
-    public void Subscribe<T>(Action<T> callback)
-    {
-        string key = typeof(T).Name;
-        if (_signalCallbacks.ContainsKey(key))
-            _signalCallbacks[key].Add(callback);
-        else
-            _signalCallbacks.Add(key, new List<object>() { callback });
-    }
-
-    public void Unsubscribe<T>(Action<T> callback)
-    {
-        string key = typeof(T).Name;
-        if (_signalCallbacks.ContainsKey(key))
-            _signalCallbacks[key].Remove(callback);
-        else
-            Debug.LogErrorFormat("XD");
-    }
-
-    public void Invoke<T>(T signal)
-    {
-        string key = typeof(T).Name;
-        if (_signalCallbacks.ContainsKey(key))
+        public void Subscribe<T>(Action<T> callback)
         {
-            foreach (var obj in _signalCallbacks[key])
+            string key = typeof(T).Name;
+            if (_signalCallbacks.ContainsKey(key))
+                _signalCallbacks[key].Add(callback);
+            else
+                _signalCallbacks.Add(key, new List<object>() { callback });
+        }
+
+        public void Unsubscribe<T>(Action<T> callback)
+        {
+            string key = typeof(T).Name;
+            if (_signalCallbacks.ContainsKey(key))
+                _signalCallbacks[key].Remove(callback);
+            else
+                Debug.LogErrorFormat("XD");
+        }
+
+        public void Invoke<T>(T signal)
+        {
+            string key = typeof(T).Name;
+            if (_signalCallbacks.ContainsKey(key))
             {
-                var callback = obj as Action<T>;
-                callback?.Invoke(signal);
+                foreach (var obj in _signalCallbacks[key])
+                {
+                    var callback = obj as Action<T>;
+                    callback?.Invoke(signal);
+                }
             }
         }
     }

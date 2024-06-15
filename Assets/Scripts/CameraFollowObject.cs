@@ -1,5 +1,5 @@
-using DG.Tweening;
 using System.Collections;
+using Player;
 using UnityEngine;
 
 public class CameraFollowObject : MonoBehaviour

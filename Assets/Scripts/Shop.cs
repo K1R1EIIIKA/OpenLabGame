@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +8,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject Rope;
     private bool canBuy;
-    private int currentCost=999;
+    private int currentCost = 999;
     [SerializeField] private Animator animator;
 
     private void Update()
@@ -20,7 +18,7 @@ public class Shop : MonoBehaviour
 
     public void CollectThing(int index)
     {
-        if (inventory.GetArray()[index].GetComponent<CollectableThingUI>().cost <=cheese.isHave)
+        if (inventory.GetArray()[index].GetComponent<CollectableThingUI>().cost <= cheese.isHave)
         {
             canBuy = true;
         }
