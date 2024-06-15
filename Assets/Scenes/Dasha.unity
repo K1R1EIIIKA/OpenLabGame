@@ -1878,7 +1878,7 @@ Transform:
   m_GameObject: {fileID: 430912472}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.13826, y: 14.154142, z: -9.041154}
+  m_LocalPosition: {x: -34.13823, y: 14.154142, z: -9.041154}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2021,15 +2021,15 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.29174533
     y: 0
-    width: 1
+    width: 0.41614705
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.821429
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -94094,11 +94094,11 @@ Transform:
   m_GameObject: {fileID: 1652039866}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2292371, y: 0.57836896, z: 1}
+  m_LocalPosition: {x: -48.95, y: 14.23, z: 0}
+  m_LocalScale: {x: 4.30233, y: 2.0242913, z: 3.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1666506423}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1652039868
 MonoBehaviour:
@@ -94115,6 +94115,7 @@ MonoBehaviour:
   _playerTransform: {fileID: 1666506423}
   _playerMovementScript: {fileID: 1666506421}
   _flipRotationTime: 1
+  coolDownCameraRotation: 2
 --- !u!1 &1660052769
 GameObject:
   m_ObjectHideFlags: 0
@@ -94213,7 +94214,6 @@ GameObject:
   - component: {fileID: 1666506422}
   - component: {fileID: 1666506426}
   - component: {fileID: 1666506427}
-  - component: {fileID: 1666506428}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -94285,8 +94285,7 @@ Transform:
   m_LocalPosition: {x: -48.95, y: 14.23, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 1652039867}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1666506425
@@ -94397,41 +94396,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!70 &1666506428
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1666506420}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.08, y: -0.045}
-  m_Size: {x: 0.26, y: 0.23}
-  m_Direction: 0
 --- !u!1 &1709758850
 GameObject:
   m_ObjectHideFlags: 0
@@ -95808,7 +95772,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -108024,6 +107988,7 @@ SceneRoots:
   - {fileID: 490687189}
   - {fileID: 1436723076}
   - {fileID: 1666506423}
+  - {fileID: 1652039867}
   - {fileID: 1290410635}
   - {fileID: 152323333}
   - {fileID: 476665289}
