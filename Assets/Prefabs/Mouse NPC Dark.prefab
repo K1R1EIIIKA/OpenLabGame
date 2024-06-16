@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5093280508044532718}
   - component: {fileID: 234979422152363390}
   m_Layer: 0
-  m_Name: anim_mouse_extra_8
+  m_Name: Mouse NPC Dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
