@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1920329604169003700}
   - component: {fileID: 7582930380153597385}
   - component: {fileID: 4575161787552243981}
+  - component: {fileID: 6425078901772339614}
   m_Layer: 0
   m_Name: item_cheese
   m_TagString: Untagged
@@ -146,6 +147,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.6863098, y: 1.591629}
   m_EdgeRadius: 0
+--- !u!95 &6425078901772339614
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893608996526692393}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 144e2c4c2016d6541953d754cfecfb6a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7466336482853974273
 GameObject:
   m_ObjectHideFlags: 0
