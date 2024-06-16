@@ -1,4 +1,5 @@
 using Kirill.Audio;
+using Kirill.ScriptPlaces;
 using UnityEngine;
 
 namespace Player
@@ -36,19 +37,42 @@ namespace Player
         private bool _isJumping;
         private bool _isMusicPlaying;
         private float _coyoteTimeCounter;
+        
+        [SerializeField] private GameObject _inventoryScript;
+        
+        public static PlayerMovement Instance { get; private set; }
+        public bool CanMove { get; set; } = true;
+        
+        private void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
+        }
 
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
+            EnableInventory(false);
             //_spriteRenderer = GetComponent<SpriteRenderer>();
             cameraFollowObjectScript = cameraFollowGameObject.GetComponent<CameraFollowObject>();
 
             _fallSpeedYDampingChangeThreshold = CameraManager.instance._fallSpeedYDampingChangeThreshold;
         }
+        
+        public void EnableInventory(bool enable)
+        {
+            _inventoryScript.SetActive(enable);
+        }
 
         private void FixedUpdate()
         {
-            Move();
+            if (!ScriptRun.IsScriptRun && CanMove)
+            {
+                Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+                Move(input);
+            }
 
             if (_rb.velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping &&
                 !CameraManager.instance.LerpedFromPlayerFalling)
@@ -66,7 +90,15 @@ namespace Player
 
         private void Update()
         {
-            Jump();
+            if (!ScriptRun.IsScriptRun && CanMove)
+                Jump();
+        }
+        
+        public void ScriptJump(float jumpForce)
+        {
+            _rb.velocity = Vector2.up * _jumpForce * jumpForce;
+            jumpTimeCounter = jumpTime;
+            _isJumping = true;
         }
 
         private void Jump()
@@ -110,15 +142,14 @@ namespace Player
             }
         }
 
-        private void Move()
+        public void Move(Vector2 input)
         {
-            _input = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+            _input = input;
             _input = _input.normalized;
-
             _rb.velocity = new Vector2(_input.x * _speed, _rb.velocity.y);
 
-
             _isMoving = _input.x != 0;
+            Debug.Log(_isMoving);
 
             if (_isMoving)
             {
