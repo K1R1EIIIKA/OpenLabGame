@@ -22,7 +22,7 @@ public class SecretRoom : MonoBehaviour
         {
             FadeTilemap(0.4f, _fadeDuration, _tileMap);
 
-            FadeTilemap(0, _openTileMapDuration, _tilesToOpen);
+            FadeTilemap(0.2f, _openTileMapDuration, _tilesToOpen);
         }
     }
 

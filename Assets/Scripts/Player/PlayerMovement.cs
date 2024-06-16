@@ -1,3 +1,4 @@
+using Kirill.Audio;
 using UnityEngine;
 
 namespace Player
@@ -23,13 +24,18 @@ namespace Player
 
         private float _fallSpeedYDampingChangeThreshold;
 
-        [Header("Jump")] [SerializeField] private float _jumpForce = 5f;
+        [Header("Jump")] 
+        [SerializeField] private float _jumpForce = 5f;
         [SerializeField] private float jumpTime = 0.35f;
-        private float jumpTimeCounter;
         [SerializeField] private LayerMask _groundLayer;
         [SerializeField] private float _groundCheckRadius = 0.2f;
         [SerializeField] private Transform _feetPos;
+        [SerializeField] private float _coyoteTime = 0.2f;
+        
+        private float jumpTimeCounter;
         private bool _isJumping;
+        private bool _isMusicPlaying;
+        private float _coyoteTimeCounter;
 
         private void Start()
         {
@@ -66,12 +72,23 @@ namespace Player
         private void Jump()
         {
             _isGrounded = Physics2D.OverlapCircle(_feetPos.position, _groundCheckRadius, _groundLayer);
+            
+            if (_isGrounded)
+            {
+                _coyoteTimeCounter = _coyoteTime;
+            }
+            else
+            {
+                _coyoteTimeCounter -= Time.deltaTime;
+            }
 
-            if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+            if (Input.GetKeyDown(KeyCode.Space) && _coyoteTimeCounter > 0)
             {
                 _rb.velocity = Vector2.up * _jumpForce;
                 jumpTimeCounter = jumpTime;
                 _isJumping = true;
+                
+                _coyoteTimeCounter = 0;
             }
 
             if (Input.GetKey(KeyCode.Space) && _isJumping)
@@ -105,11 +122,28 @@ namespace Player
 
             if (_isMoving)
             {
+                if (_isGrounded && !_isMusicPlaying)
+                {
+                    AudioManager.Instance.Play("Player Move");
+                    _isMusicPlaying = true;
+                }
+                else if (!_isGrounded && _isMusicPlaying)
+                {
+                    AudioManager.Instance.Stop("Player Move");
+                    _isMusicPlaying = false;
+                }
+                
                 animator.SetBool("IsMove", true);
                 TurnCheck();
             }
             else
             {
+                if (_isMusicPlaying)
+                {
+                    AudioManager.Instance.Stop("Player Move");
+                    _isMusicPlaying = false;
+                }
+                
                 animator.SetBool("IsMove", false);
             }
 
