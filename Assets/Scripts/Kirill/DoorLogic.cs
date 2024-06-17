@@ -10,6 +10,10 @@ namespace Kirill
         [SerializeField] private Transform _target;
         [SerializeField] private GameObject _player;
         [SerializeField] private Image _loadingCanvas;
+
+
+        [SerializeField] private Musicinhome _musicinhome;
+
         
         [Header("Hint")]
         [SerializeField] private GameObject _hintCanvas;
@@ -45,6 +49,8 @@ namespace Kirill
         {
             if (Input.GetKeyDown(KeyCode.E) && _hintCanvas.activeSelf && !_isCooldown)
             {
+                _musicinhome.inside = !_musicinhome.inside;
+                _musicinhome.ChangeMusic();
                 OpenDoor();
             }
         }
