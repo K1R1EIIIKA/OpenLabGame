@@ -26,7 +26,10 @@ public class CollectableThing : MonoBehaviour
 
     private void CollectItem()
     {
-        InventoryScript.Collect(index);
+        if (_isCheese)
+            InventoryScript.Collect(index, 5);
+        else
+            InventoryScript.Collect(index);
         Destroy(gameObject);
     }
 

@@ -1,13 +1,16 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
     [SerializeField] private CollectableThingUI cheese;
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject Rope;
-    // [SerializeField] private GameObject Accordeon;
+    [SerializeField] private GameObject Accordion;
+    [SerializeField] private TextMeshProUGUI _cheeseCount;
+    
     private bool canBuy;
     private int currentCost = 999;
 
@@ -27,24 +30,27 @@ public class Shop : MonoBehaviour
             inventory.Collect(index);
             cheese.isHave -= inventory.GetArray()[index].GetComponent<CollectableThingUI>().cost;
             
+            _cheeseCount.text = "x" + cheese.isHave;
+            
             if (index == 1)
             {
-                EnableRope();
+                DisableRope();
             }
-            // else if (index == 7)
-            // {
-            //     EnableAccordeon();
-            // }
+            
+            else if (index == 7)
+            {
+                DisableAccordion();
+            }
         }
     }
-    
-    public void EnableRope()
+
+    public void DisableRope()
     {
-        Rope.SetActive(true);
+        Rope.GetComponent<Button>().interactable = false;
     }
 
-    // public void EnableAccordeon()
-    // {
-    //     Accordeon.SetActive(true);
-    // }
+    public void DisableAccordion()
+    {
+        Accordion.GetComponent<Button>().interactable = false;
+    }
 }

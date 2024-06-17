@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -18,6 +19,8 @@ namespace Kirill.Npc
 
         [SerializeField] private bool _isQuest;
         [SerializeField] private GameObject _questCanvas;
+
+        [SerializeField] private Action _action;
 
         private void Awake()
         {

@@ -149,7 +149,6 @@ namespace Player
             _rb.velocity = new Vector2(_input.x * _speed, _rb.velocity.y);
 
             _isMoving = _input.x != 0;
-            Debug.Log(_isMoving);
 
             if (_isMoving)
             {
