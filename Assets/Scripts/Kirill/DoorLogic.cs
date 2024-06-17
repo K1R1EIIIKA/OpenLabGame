@@ -30,7 +30,6 @@ namespace Kirill
                     _hintCanvas.SetActive(true);
                 else
                     OpenDoor();
-                    
             }
         }
 
