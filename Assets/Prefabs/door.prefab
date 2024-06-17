@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _hintCanvas: {fileID: 2763107488575351553}
   _player: {fileID: 0}
   _loadingCanvas: {fileID: 0}
+  _hintCanvas: {fileID: 2763107488575351553}
+  _isHintNeeded: 1

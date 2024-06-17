@@ -8,9 +8,12 @@ namespace Kirill
     public class DoorLogic : MonoBehaviour
     {
         [SerializeField] private Transform _target;
-        [SerializeField] private GameObject _hintCanvas;
         [SerializeField] private GameObject _player;
         [SerializeField] private Image _loadingCanvas;
+        
+        [Header("Hint")]
+        [SerializeField] private GameObject _hintCanvas;
+        [SerializeField] private bool _isHintNeeded;
         
         private static bool _isCooldown;
 
@@ -23,7 +26,11 @@ namespace Kirill
         {
             if (other.CompareTag("Player"))
             {
-                _hintCanvas.SetActive(true);
+                if (_isHintNeeded)
+                    _hintCanvas.SetActive(true);
+                else
+                    OpenDoor();
+                    
             }
         }
 
