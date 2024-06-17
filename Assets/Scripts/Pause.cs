@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
@@ -16,9 +17,11 @@ public class Pause : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.Escape))
         {
-            isActive = !isActive;
+            SetActive();
         }
+
         PausePanel.SetActive(isActive);
+
         if(isActive)
         {
             Time.timeScale = 0f;
@@ -32,5 +35,10 @@ public class Pause : MonoBehaviour
     public void SetActive()
     {
         isActive=!isActive;
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }
