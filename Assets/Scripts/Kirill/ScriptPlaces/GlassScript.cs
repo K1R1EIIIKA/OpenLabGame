@@ -13,6 +13,7 @@ namespace Kirill.ScriptPlaces
         [SerializeField] private Vector2 _offset;
         [SerializeField] private Vector2 _force;
         [SerializeField] private List<GameObject> _objectsToEnable;
+        [SerializeField] private List<GameObject> _objectsToDisable;
 
         private bool _isTriggered;
         
@@ -57,6 +58,11 @@ namespace Kirill.ScriptPlaces
             foreach (var obj in _objectsToEnable)
             {
                 obj.SetActive(true);
+            }
+            
+            foreach (var obj in _objectsToDisable)
+            {
+                obj.SetActive(false);
             }
         }
     }
