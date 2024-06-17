@@ -20,7 +20,7 @@ namespace Kirill.Npc
         [SerializeField] private bool _isQuest;
         [SerializeField] private GameObject _questCanvas;
 
-        [SerializeField] private bool _isOpenInventory;
+        [SerializeField] private Action _action;
 
         private void Awake()
         {
@@ -97,10 +97,6 @@ namespace Kirill.Npc
 
         private IEnumerator ShowEmotions()
         {
-            if (_isOpenInventory)
-            {
-                FindObjectOfType<Player.PlayerMovement>().EnableInventory(true);
-            }
             DOVirtual.DelayedCall((_lifeTime + _fadeTime) * _emotionClouds.Count, () =>
             {
                 _isCooldown = false;

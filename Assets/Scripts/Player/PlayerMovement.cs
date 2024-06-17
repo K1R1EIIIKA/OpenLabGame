@@ -9,7 +9,7 @@ namespace Player
         [SerializeField] private float _speed = 5f;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private SpriteRenderer _spriteRenderer;
-        [SerializeField] public Animator animator;
+        [SerializeField] private Animator animator;
 
         private Vector2 _input;
         private bool _isMoving;
