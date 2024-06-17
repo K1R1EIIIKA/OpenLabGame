@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3519890323337864134}
   - component: {fileID: 1368705639075995647}
   - component: {fileID: 1323696420580629055}
+  - component: {fileID: 701697963939751636}
   m_Layer: 0
   m_Name: item_nail
   m_TagString: Untagged
@@ -103,6 +104,41 @@ MonoBehaviour:
   index: 4
   _isCheese: 0
   _hintCanvas: {fileID: 7776482432957705020}
+--- !u!58 &701697963939751636
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055796609386800832}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.031288147, y: 0.00881958}
+  serializedVersion: 2
+  m_Radius: 0.87096405
 --- !u!1 &6118922385606402267
 GameObject:
   m_ObjectHideFlags: 0
